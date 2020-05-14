@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="frame_back" type="id" />
+    <item name="frame_loading_dialog_text" type="id" />
+    <item name="frame_progressbar" type="id" />
+    <item name="frame_switch_text" type="id" />
+    <!--    tag id-->
+    <item name="frame_tag_page" type="id" />
+    <item name="frame_tag_refresh_view" type="id" />
+
+</resources>

@@ -1,0 +1,66 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'android-aspectjx'
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.0"
+    defaultConfig {
+        applicationId "com.lucas.frame2"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            buildConfigField("String", "HOST", '"https://www.wanandroid.com"')
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            buildConfigField("String", "HOST", '"https://www.wanandroid.com"')
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+
+    //开启协程
+    kotlin {
+        experimental {
+            coroutines 'enable'
+        }
+    }
+
+    //Using Kotlin experimental characteristics
+    //You only need this for Kotlin < 1.3.40
+    androidExtensions {
+        experimental = true
+    }
+}
+aspectjx {
+    //关闭AspectJX功能
+//    enabled false
+//排除所有package路径中包含`android.support`的class文件及库（jar文件）
+    exclude 'android.support', 'android.appcompat', 'org.jetbrains.kotlinx', 'org.jetbrains.kotlin'
+}
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.2.0', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.google.errorCode.findbugs', module: 'jsr305'
+    })
+    implementation project(path: ':frame')
+    kapt rootProject.ext.dependencies["room-compiler"]
+}

@@ -1,0 +1,104 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'android-aspectjx'
+apply plugin: 'kotlin-kapt'
+
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
+android {
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+
+    resourcePrefix "frame_"
+    defaultConfig {
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+    //开启协程
+    kotlin {
+        experimental {
+            coroutines 'enable'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api 'androidx.appcompat:appcompat:1.1.0'
+    api 'androidx.core:core-ktx:1.2.0'
+    //design
+    api 'com.google.android.material:material:1.2.0-alpha05'
+    //协程依赖
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.0'
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    //aspectj
+    api rootProject.ext.dependencies["aspectj"]
+    //koin
+    api rootProject.ext.dependencies["koin-android"]
+    api rootProject.ext.dependencies["koin-scape"]
+    api rootProject.ext.dependencies["koin-viewmodel"]
+    api rootProject.ext.dependencies["koin-ext"]
+    //permission
+    api rootProject.ext.dependencies["rxpermissions"]
+    api rootProject.ext.dependencies["rxjava"]
+    api rootProject.ext.dependencies["rxandroid"]
+    //utils
+    api rootProject.ext.dependencies["utilcode"]
+    //retorfit
+    api rootProject.ext.dependencies["retrofit"]
+    api rootProject.ext.dependencies["adapter-rxjava"]
+    api rootProject.ext.dependencies["converter-gson"]
+    //事件
+    api rootProject.ext.dependencies["otto"]
+    //okhttp
+    api rootProject.ext.dependencies["okhttp"]
+    api rootProject.ext.dependencies["okio"]
+    api rootProject.ext.dependencies["logging-interceptor"]
+    //分包
+    api rootProject.ext.dependencies["multidex"]
+    //二维码
+    api rootProject.ext.dependencies["zxing"]
+    api rootProject.ext.dependencies["cookie"]
+    //数据库
+    api rootProject.ext.dependencies["room-runtime"]
+    api rootProject.ext.dependencies["room-rxjava2"]
+    kapt rootProject.ext.dependencies["room-compiler"]
+    //lifecycle
+//    api rootProject.ext.dependencies["lifecycle"]
+//    api rootProject.ext.dependencies["rxlifecycle-android"]
+//    api rootProject.ext.dependencies["rxlifecycle-components"]
+    //qmui
+    api rootProject.ext.dependencies["qmui"]
+    //adapter
+    api rootProject.ext.dependencies["adapter"]
+    //agentWeb
+    api rootProject.ext.dependencies["agent-web"]
+    api rootProject.ext.dependencies["agent-filechooser"]
+    api rootProject.ext.dependencies["agent-downloader"]
+    //x5
+//    api rootProject.ext.dependencies["x5"]
+    //arouter
+    api rootProject.ext.dependencies["arouter-api"]
+    kapt rootProject.ext.dependencies["arouter-compiler"]
+}
